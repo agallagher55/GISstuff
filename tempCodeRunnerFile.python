@@ -1,0 +1,8 @@
+import os
+
+num = "20"
+st = "GERTUDE"
+s_type = "DR"
+comm = "DARTMOUTH"
+
+print " ".join([num, st, s_type, comm])

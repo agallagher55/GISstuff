@@ -1,3 +1,9 @@
+"""
+Data Quality Check
+If rec_poly feature asset status is set to disposed,
+make sure Rec_ID/Fac_Id is set 0 and  rec_point is deleted if no more polygons for feature are present
+"""
+
 import arcpy
 import os
 import csv
@@ -56,6 +62,15 @@ def write_results(data):
     # edit.startEditing(False, True)
 
 
+editable = False
+
+print "Would you like to make edits? (Y/N)"
+if raw_input().upper() == "Y":
+    editable = True
+
+print "Editable value: {}".format(editable)
+
+
 def main():
     edit = arcpy.da.Editor(workspace)
 
@@ -86,28 +101,45 @@ def main():
 
         # IF NO OTHER POLYGONS, CHANGE REC_ID TO 0 AND DELETE RECPOINT
         else:
-            edit.startEditing(False, True)
-            edit.startOperation()
-            print "\nChanging REC_ID to 0..."
-            with arcpy.da.UpdateCursor(parkPoly, "REC_ID", where_clause=sql_disposed) as cursor:
-                for row in cursor:
-                    if row[0] == rec:
-                        row[0] = 0
-                        cursor.updateRow(row)
-                        print "\tUpdated REC_ID {} to 0".format(rec)
-            edit.stopOperation()
+            if editable is True:
+                edit.startEditing(False, True)
+                edit.startOperation()
+                print "\nChanging REC_ID to 0..."
+                with arcpy.da.UpdateCursor(parkPoly, "REC_ID", where_clause=sql_disposed) as cursor:
+                    for row in cursor:
+                        if row[0] == rec:
+                            row[0] = 0
+                            cursor.updateRow(row)
+                            print "\tUpdated REC_ID {} to 0".format(rec)
+                edit.stopOperation()
 
-            # DELETE POINT
-            print "\nDeleting Park Rec Feature {}...".format(rec)
-            # edit.startEditing(False, True)
-            edit.startOperation()
-            with arcpy.da.UpdateCursor(parkPoint, "REC_ID") as pointCursor:
-                for row in pointCursor:
-                    if row[0] == rec:
-                        pointCursor.deleteRow()
-                        print "\tDeleted"
-            edit.stopOperation()
-            edit.stopEditing(True)
+                # DELETE POINT
+                print "\nDeleting Park Rec Feature {}...".format(rec)
+                # edit.startEditing(False, True)
+                edit.startOperation()
+                with arcpy.da.UpdateCursor(parkPoint, "REC_ID") as pointCursor:
+                    for row in pointCursor:
+                        if row[0] == rec:
+                            pointCursor.deleteRow()
+                            print "\tDeleted"
+                edit.stopOperation()
+                edit.stopEditing(True)
+            else:
+                print "\nChanging REC_ID to 0..."
+                with arcpy.da.SearchCursor(parkPoly, "REC_ID", where_clause=sql_disposed) as cursor:
+                    for row in cursor:
+                        if row[0] == rec:
+                            row[0] = 0
+                            cursor.updateRow(row)
+                            print "\tUpdated REC_ID {} to 0".format(rec)
+
+                # DELETE POINT
+                print "\nDeleting Park Rec Feature {}...".format(rec)
+                with arcpy.da.SearchCursor(parkPoint, "REC_ID") as pointCursor:
+                    for row in pointCursor:
+                        if row[0] == rec:
+                            pointCursor.deleteRow()
+                            print "\tDeleted"
 
     # edit.stopEditing(True)
 
@@ -124,6 +156,3 @@ print "\nFinished Processing."
 # Deleteing park rec feature points does not get run
 # --> *for row in cursor, changed to for row in point cursor
 # --> should work now, if not maybe run editing operation inside cursors
-
-
-# Add report mode and delete mode

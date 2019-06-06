@@ -8,6 +8,7 @@ If no PRF point exists to represent that feature, please create a PRF and record
 import arcpy
 import os
 
+arcpy.AddMessage("\nSetting Variables...")
 user_dir = os.path.expanduser('~')
 
 # VARIALBLES
@@ -24,17 +25,17 @@ parkPointFields = [f.name for f in arcpy.ListFields(parkPoint)]
 text_result = ''
 results_dict = {}
 
-print "\nProcessing..."
+arcpy.AddMessage("\nProcessing...")
 
 # Get Count of results
 with arcpy.da.SearchCursor(parkPoly, ["REC_ID", "ASSETID"], where_clause=sql_poly) as cursor:
-    print '\tPark Poly Results\n\t\t\t"REC_ID", "ASSETID"'
+    arcpy.AddMessage('\tPark Poly Results\n\t\t\t"REC_ID", "ASSETID"')
     for row in cursor:
-        print '\tFound:\t{}'.format(row)
+        arcpy.AddMessage('\tFound:\t{}'.format(row))
         results_dict[row] = None
 
 
-print results_dict
+arcpy.AddMessage(results_dict)
 
 # link between polygon and point ==> RECPOLYID, poly -- ASSETID, point
 # Search points where ASSETID = RECPOLYID
@@ -42,39 +43,44 @@ print results_dict
 
 
 def get_missing_ids():
-    print "\nSearching Point Featureclass for matching IDs..."
+    arcpy.AddMessage("\nSearching Point Featureclass for matching IDs...")
 
     with arcpy.da.SearchCursor(parkPoint, ["RECPOLYID", "REC_ID"]) as pointCursor:
         for recID in results_dict.keys():
-            print "\tProcessing '{}'".format(recID)
+            arcpy.AddMessage("\tOutdoor_Rec_Poly - REC_ID, RPLY: '{}'".format(recID))
 
             for recpoly in pointCursor:
                 if recpoly[0] is not None:
                     if recpoly[0] == recID[1]:
-                        print "\t*Found RECPOLYID:\t{}".format(recpoly)
-                        print "\t\tREC_ID should match:\t{}".format(recpoly[1])
+                        arcpy.AddMessage("\t*Found RECPOLYID:\t{}".format(recpoly))
+                        arcpy.AddMessage("\t\tREC_ID should match:\t{}".format(recpoly[1]))
+
+                        # Add match to Dictionary
                         results_dict[recID] = recpoly
 
 
 get_missing_ids()
 
-print "\nRESULTS:"
+arcpy.AddMessage("\nRESULTS:")
 matches = []
 no_matches = []
+# no_matches = [k for k, v in results_dict.items() if v is not None]
 
 for k, v in results_dict.items():
+
+    # Values contain record matches
     if v is not None:
         matches.append("{}: {}".format(k, v))
 
     else:
-        no_matches.append("{}: {}".format(k, v))
+        no_matches.append(str(k))
 
 if len(matches) > 0:
-    print "\tMatches: ", matches
+    arcpy.AddMessage("\tMatches: ", matches)
     # Add the rec_ID from rec point to rec poly?
 
 if len(no_matches) > 0:
-    print "\tNeed to create PARK REC FEATURES for;\n\t\t", '\n\t\t'.join(no_matches)
+    arcpy.AddMessage("\t**Need to create PARK REC FEATURES for;\n\t\t{}".format('\n\t\t'.join(no_matches)))
 
 # Can create text results
 # Still need to make actual edits

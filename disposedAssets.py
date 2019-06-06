@@ -13,11 +13,15 @@ import datetime
 print "Would you like to make edits? (Y/N)"
 
 editable = False
-if raw_input().upper() == "Y":
+# if raw_input().upper() == "Y":
+#     editable = True
+
+if arcpy.GetParameter(0) is True:
     editable = True
 
+
 # ========== VARIABLES ==========
-arcpy.AddMessage("Setting Variables...\n")
+arcpy.AddMessage("\nSetting Variables...\n")
 user_dir = os.path.expanduser('~')
 downloads_dir = os.path.join(user_dir, 'Downloads')
 csv_file = os.path.join(downloads_dir, 'results.csv')
@@ -150,7 +154,7 @@ def main(results_string):
 
 main(text_result)
 
-arcpy.AddMessage("\nFinished Processing.")
+arcpy.AddMessage("\nFinished Processing.\n")
 text_result += "\nFinished Processing."
 
 with open(os.path.join(downloads_dir, 'results.txt'), 'w') as txt_results:

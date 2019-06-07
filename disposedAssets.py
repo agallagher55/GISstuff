@@ -56,7 +56,7 @@ if len(disposedRecIDS) > 0:
     arcpy.AddMessage("Disposed REC_IDs: {}".format([str(x) for x in disposedRecIDS]))
     
     text_result += "Disposed REC_IDs: {}".format([str(x) for x in disposedRecIDS])
-    text_result += "Found {} Polygon Assets that require modification/inspection.\n\t".format(len(disposedRecIDS))
+    text_result += "\nFound {} Polygon Assets that require modification/inspection.\n\t".format(len(disposedRecIDS))
 else:
     arcpy.AddMessage("Found 0 Polygon Assets that need modification!")
     text_result += "Found 0 Polygon Assets that need modification!"
@@ -69,8 +69,8 @@ def main(results_string):
     edit = arcpy.da.Editor(workspace)
 
     for rec in disposedRecIDS:
-        arcpy.AddMessage(("\nDisposed RecID: ", rec))
-        results_string += ("\nDisposed RecID: ", rec)
+        arcpy.AddMessage("\nDisposed RecID: " + str(rec))
+        results_string += "\nDisposed RecID: " + str(rec)
         
         # NEED TO FINISH THIS LOGIC - ACCOUNTS FOR POLYGONS THAT REPLACE DISPOSED POLYGONS
         # OR WHERE ONLY ONE PART OF THE ASSET (PLAYGROUND) IS DISPOSED
@@ -79,24 +79,28 @@ def main(results_string):
         # CHANGE REC_ID TO ZERO, KEEP REC POINT
 
         if rec in [row[parkPolyFields.index("REC_ID")] for row in polyData_notDisposed]:
-            arcpy.AddMessage("*\t{} has more than one feature")
-            results_string += "*\t{} has more than one feature"
+            arcpy.AddMessage("\t*{} has more than one feature".format(rec))
+            results_string += "\t*{} has more than one feature".format(rec)
 
             # Update REC_ID
-            # edit.startEditing(False, True)
-            # edit.startOperation()
-            with arcpy.da.UpdateCursor(parkPoly, "REC_ID", where_clause=sql_disposed) as cursor:
-                for row in cursor:
-                    if row[0] == rec:
-                        arcpy.AddMessage(("MULTIPLE FEATURES", row))
-                        results_string += "MULTIPLE FEATURES", row
-                        # row[0] = 0
-                        # cursor.updateRow(row)
-                        # edit.stopOperation()
-                        # edit.stopEditing(True)
-                        arcpy.AddMessage("\tUpdated {} to 0".format(rec))
-                        results_string += "\tUpdated {} to 0".format(rec)
-            # edit.stopEditing(True)
+            if editable is True:
+                edit.startEditing(False, True)
+                edit.startOperation()
+
+                with arcpy.da.UpdateCursor(parkPoly, "REC_ID", where_clause=sql_disposed) as cursor:
+                    for row in cursor:
+                        if row[0] == rec:
+                            arcpy.AddMessage("MULTIPLE FEATURES {}".format(row))
+                            results_string += "MULTIPLE FEATURES: {}".format(row)
+
+                            row[0] = 0
+                            cursor.updateRow(row)
+
+                            arcpy.AddMessage("\tUpdated {} to 0".format(rec))
+                            results_string += "\tUpdated {} to 0".format(rec)
+
+                edit.stopOperation()
+                edit.stopEditing(True)
 
         # IF NO OTHER POLYGONS, CHANGE REC_ID TO 0 AND DELETE RECPOINT
         else:
@@ -128,12 +132,14 @@ def main(results_string):
                             results_string += "\tDeleted"
                 edit.stopOperation()
                 edit.stopEditing(True)
-            else:
+
+            # else:
                 arcpy.AddMessage("\nChanging REC_ID to 0...")
                 results_string += "\nChanging REC_ID to 0..."
                 with arcpy.da.SearchCursor(parkPoly, "REC_ID", where_clause=sql_disposed) as cursor:
                     for row in cursor:
                         if row[0] == rec:
+                            arcpy.AddMessage(row[0])
                             row[0] = 0
                             cursor.updateRow(row)
                             arcpy.AddMessage("\tUpdated REC_ID {} to 0".format(rec))

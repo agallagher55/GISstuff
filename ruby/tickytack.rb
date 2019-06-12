@@ -16,19 +16,34 @@ class Player
         @team = team
     end
 
-    def make_move(position)
-        
+    def make_move(position) 
     end
 end
 
 class Board
-    @@spaces = Hash.new(['A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3'])
-    @@spaces.default = ' '
-    @@spaces['A1'] = 'X'
+    attr_accessor :spaces, :board
+
+    spaces = Hash.new(['A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3'])
+    spaces.default = ' '
+
+    @@starting_board = " #{spaces['A1']}| #{spaces['A2']}| #{spaces['A3']}\n========\n #{spaces['B1']}| #{spaces['B2']}| #{spaces['B3']}\n========\n #{spaces['C1']}| #{spaces['C2']}| #{spaces['C3']}"
+    board = " #{spaces['A1']}| #{spaces['A2']}| #{spaces['A3']}\n========\n #{spaces['B1']}| #{spaces['B2']}| #{spaces['B3']}\n========\n #{spaces['C1']}| #{spaces['C2']}| #{spaces['C3']}"
 
     def initialize
-        puts " #{@@spaces['A1']}| #{}| #{}\n========\n  #{}| #{}|\n========\n  #{}| #{}| #{}"
+        puts "\nNew Game!"
+        puts @@starting_board
+    end
+
+    def show
+        puts self.board
+    end
+
+    def make_move(team, position) 
+        return self.spaces[position] = team
+        puts self.board
     end
 end
 
-Board.new
+game1 = Board.new
+game1.show()
+# game1.make_move('X', 'A1')

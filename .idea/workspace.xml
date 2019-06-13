@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6d4ea19d-1e95-4e6e-bb4e-3148850b5f2f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/New folder/~$ojects.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/New folder/~WRL2883.tmp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/disposedAssets.py" beforeDir="false" afterPath="$PROJECT_DIR$/disposedAssets.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -13,7 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.19963811">
+    <splitter split-orientation="horizontal" split-proportion="0.18998794">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
@@ -89,7 +87,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/RECid_0_null.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="607">
+                <state relative-caret-position="1326">
                   <caret line="79" column="48" selection-start-line="79" selection-start-column="48" selection-end-line="79" selection-end-column="48" />
                 </state>
               </provider>
@@ -98,8 +96,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/disposedAssets.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="391">
-                  <caret line="25" column="51" lean-forward="true" selection-start-line="25" selection-start-column="51" selection-end-line="25" selection-end-column="51" />
+                <state relative-caret-position="576">
+                  <caret line="164" lean-forward="true" selection-start-line="164" selection-end-line="164" />
                 </state>
               </provider>
             </entry>
@@ -437,15 +435,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RECid_0_null.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="607">
+        <state relative-caret-position="1326">
           <caret line="79" column="48" selection-start-line="79" selection-start-column="48" selection-end-line="79" selection-end-column="48" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/disposedAssets.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="25" column="51" lean-forward="true" selection-start-line="25" selection-start-column="51" selection-end-line="25" selection-end-column="51" />
+        <state relative-caret-position="576">
+          <caret line="164" lean-forward="true" selection-start-line="164" selection-end-line="164" />
         </state>
       </provider>
     </entry>

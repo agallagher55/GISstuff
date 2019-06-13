@@ -134,26 +134,26 @@ def main(results_string):
                 edit.stopEditing(True)
 
             # else:
-                arcpy.AddMessage("\nChanging REC_ID to 0...")
-                results_string += "\nChanging REC_ID to 0..."
-                with arcpy.da.SearchCursor(parkPoly, "REC_ID", where_clause=sql_disposed) as cursor:
-                    for row in cursor:
-                        if row[0] == rec:
-                            arcpy.AddMessage(row[0])
-                            row[0] = 0
-                            cursor.updateRow(row)
-                            arcpy.AddMessage("\tUpdated REC_ID {} to 0".format(rec))
-                            results_string += "\tUpdated REC_ID {} to 0".format(rec)
+            #     arcpy.AddMessage("\nChanging REC_ID to 0...")
+            #     results_string += "\nChanging REC_ID to 0..."
+            #     with arcpy.da.SearchCursor(parkPoly, "REC_ID", where_clause=sql_disposed) as cursor:
+            #         for row in cursor:
+            #             if row[0] == rec:
+            #                 arcpy.AddMessage(row[0])
+            #                 row[0] = 0
+            #                 cursor.updateRow(row)
+            #                 arcpy.AddMessage("\tUpdated REC_ID {} to 0".format(rec))
+            #                 results_string += "\tUpdated REC_ID {} to 0".format(rec)
 
                 # DELETE POINT
-                arcpy.AddMessage("\nDeleting Park Rec Feature {}...".format(rec))
-                results_string += "\nDeleting Park Rec Feature {}...".format(rec)
-                with arcpy.da.SearchCursor(parkPoint, "REC_ID") as pointCursor:
-                    for row in pointCursor:
-                        if row[0] == rec:
-                            pointCursor.deleteRow()
-                            arcpy.AddMessage("\tDeleted")
-                            results_string += "\tDeleted"
+                # arcpy.AddMessage("\nDeleting Park Rec Feature {}...".format(rec))
+                # results_string += "\nDeleting Park Rec Feature {}...".format(rec)
+                # with arcpy.da.SearchCursor(parkPoint, "REC_ID") as pointCursor:
+                #     for row in pointCursor:
+                #         if row[0] == rec:
+                #             pointCursor.deleteRow()
+                #             arcpy.AddMessage("\tDeleted")
+                #             results_string += "\tDeleted"
 
     # edit.stopEditing(True)
 

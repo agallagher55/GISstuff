@@ -6,17 +6,21 @@
 
 # Build your game, taking care to not share information between classes any more than you have to.
 
-# Get input from user1, add input to game, show game, get input from user2
-
 # Classes
 # Player, game
 
 class Player
-    def initialize(team)
-        @team = team
-    end
+    attr_accessor :team, :number, :wins
+    @@count = 0
 
-    def make_move(position) 
+    def initialize
+        puts "Choose your team: "
+        self.team = gets.chomp
+
+        @@count += 1
+        number = @@count
+
+        wins = 0
     end
 end
 
@@ -25,6 +29,7 @@ class Game
 
     def initialize
         puts "\nNew Game!"
+
         self.moves = 0
 
         self.spaces = Hash.new(['A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3'])
@@ -35,7 +40,6 @@ class Game
     end
 
     def show
-        # puts "\nSHOW FUNCTION"
         puts "\n", self.board
     end
 
@@ -44,30 +48,41 @@ class Game
     end
 
     def make_move(team) 
-        puts "Make your move!"
-        position = gets.chomp
-
-        if ["X", "O"].include?(self.spaces[position])
-            puts "Sorry, can't go there!"
-        else
-            self.spaces[position] = team
-            self.moves += 1
-
-            puts "\n'#{team}' at #{position}"
-            puts "Number of moves: #{moves}"
-            
-            update_board
-            show
+        puts "\n#{team}'s turn! Choose your move: "
+        position = gets.chomp.upcase
+        valid = false
+        
+        until valid
+            if ["X", "O"].include?(self.spaces[position])
+                puts "\t**SORRY, can't go there!"
+                puts "\tChoose a new move: "
+                position = gets.chomp.upcase
+            else
+                valid = true
+                self.spaces[position] = team
+                self.moves += 1
         end
 
+        puts "\n'#{team}' at #{position}"
+        puts "Total moves remaining: #{9 - @moves}"
+        
+        update_board
+        show
+        end
     end
 end
 
+player1 = Player.new
+player2 = Player.new
 game1 = Game.new
-game1.make_move('X')
-game1.make_move('O')
 
+while game1.moves < 9
+    game1.make_move(player1.team)
+    game1.make_move(player2.team)
+end
 
-## Get input from user
-## Make sure user can't go somewhere already marked
+# game1.make_move('X')
+# game1.make_move('O')
+
 ## check for win
+

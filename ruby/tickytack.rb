@@ -21,10 +21,11 @@ class Player
 end
 
 class Game
-    attr_accessor :spaces, :board
+    attr_accessor :spaces, :board, :moves
 
     def initialize
         puts "\nNew Game!"
+        self.moves = 0
 
         self.spaces = Hash.new(['A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3'])
         self.spaces.default = ' '
@@ -34,20 +35,39 @@ class Game
     end
 
     def show
-        puts "\nSHOW FUNCTION"
-        puts self.board
+        # puts "\nSHOW FUNCTION"
+        puts "\n", self.board
     end
 
-    def make_move(team, position) 
-        puts "\nMAKE_MOVE FUNCTION"
-        puts "\n", spaces[position] = team
-        puts "'#{team}' at #{position}"
-        puts self.board
-        return spaces[position] = team
+    def update_board
+        self.board = " #{spaces['A1']}| #{spaces['A2']}| #{spaces['A3']}\n========\n #{spaces['B1']}| #{spaces['B2']}| #{spaces['B3']}\n========\n #{spaces['C1']}| #{spaces['C2']}| #{spaces['C3']}"
+    end
+
+    def make_move(team) 
+        puts "Make your move!"
+        position = gets.chomp
+
+        if ["X", "O"].include?(self.spaces[position])
+            puts "Sorry, can't go there!"
+        else
+            self.spaces[position] = team
+            self.moves += 1
+
+            puts "\n'#{team}' at #{position}"
+            puts "Number of moves: #{moves}"
+            
+            update_board
+            show
+        end
+
     end
 end
 
 game1 = Game.new
-game1.make_move('X', 'A1')
-game1.show()
+game1.make_move('X')
+game1.make_move('O')
 
+
+## Get input from user
+## Make sure user can't go somewhere already marked
+## check for win

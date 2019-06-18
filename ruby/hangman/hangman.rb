@@ -6,6 +6,9 @@
 # Alex Gallagher
 
 # Add function to guess word
+# Keep track of score for self
+# Play again function
+
 
 puts "Initializing!"
 filename = "5desk.txt"
@@ -23,13 +26,13 @@ def rand_line(file, min, max)
     rand_word = suitable[rand(0..suitable.length)]
 end
 
-puts "Shortest Word Length: "
+puts "\nShortest Word Length: "
 min = gets.chomp.to_i
 puts "Longest Word Length: "
 max = gets.chomp.to_i
 
 secret_word = rand_line(filename, min, max).upcase.chomp
-puts "\nSECRET WORD: #{secret_word}\n"
+# puts "\nSECRET WORD: #{secret_word}\n"
 
 # Global Variables
 number_right = 0
@@ -96,7 +99,7 @@ while guesses > 0 && win == false
             win = true
         else
             if guesses == 0
-                puts "No more guesses left. You lose.\nGame Over"
+                puts "\nNo more guesses left. You lose.\nGame Over --> The word was: '#{secret_word}'\n"
             end
         end
     else

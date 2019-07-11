@@ -5,22 +5,27 @@ assign the correct park rec feature Fac_ID to any record where Fac_ID = 0 or is 
 If no PRF point exists to represent that feature, please create a PRF and record the new Fac_ID in outdoor_rec_poly.
 """
 
+# Add option to edit
+# Add Option for log as textfile
 import arcpy
 import os
 
 arcpy.AddMessage("\nSetting Variables...")
+editable = arcpy.GetParameterAsText(0)
 user_dir = os.path.expanduser('~')
+centroidPoints = r'C:\Users\gallaga\testing\New File Geodatabase.gdb\centroids'
+
 
 # VARIALBLES
 workspace = r"Database Connections\Prod_GIS_Halifax.sde"
 arcpy.env.workspace = workspace
 
-parkPoly = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_outdoor_rec_poly'
-parkPolyFields = [f.name for f in arcpy.ListFields(parkPoly)]
+recPoly = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_outdoor_rec_poly'
+recPolyFields = [f.name for f in arcpy.ListFields(recPoly)]
 sql_poly = "ASSETSTAT NOT LIKE 'DIS' AND REC_ID = 0 OR REC_ID IS NULL"
 
-parkPoint = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_park_recreation_feature'
-parkPointFields = [f.name for f in arcpy.ListFields(parkPoint)]
+recPoint = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_park_recreation_feature'
+recPointFields = [f.name for f in arcpy.ListFields(recPoint)]
 
 text_result = ''
 results_dict = {}
@@ -28,10 +33,10 @@ results_dict = {}
 arcpy.AddMessage("\nProcessing...")
 
 # Get Count of results
-with arcpy.da.SearchCursor(parkPoly, ["REC_ID", "ASSETID"], where_clause=sql_poly) as cursor:
-    arcpy.AddMessage('\tPark Poly Results\n\t\t\t"REC_ID", "ASSETID"')
-    for row in cursor:
-        arcpy.AddMessage('\tFound:\t{}'.format(row))
+with arcpy.da.SearchCursor(recPoly, ["REC_ID", "ASSETID"], where_clause=sql_poly) as cursor:
+    arcpy.AddMessage('\tPark Poly Results\n\t\t"REC_ID", "ASSETID"')
+    for index, row in enumerate(cursor, 1):
+        arcpy.AddMessage('\t{})\t{}'.format(index, row))
         results_dict[row] = None
 
 
@@ -43,28 +48,54 @@ arcpy.AddMessage(results_dict)
 
 
 def get_missing_ids():
-    arcpy.AddMessage("\nSearching Point Featureclass for matching IDs...")
+    arcpy.AddMessage("\nSearching RecPoint Featureclass for matching IDs...")
+    # We could have a recPoint with a recID to use for corresponding recPoly, otherwise will need to make one
 
-    with arcpy.da.SearchCursor(parkPoint, ["RECPOLYID", "REC_ID"]) as pointCursor:
-        for recID in results_dict.keys():
-            arcpy.AddMessage("\tOutdoor_Rec_Poly - REC_ID, RPLY: '{}'".format(recID))
+    with arcpy.da.SearchCursor(recPoint, ["RECPOLYID", "REC_ID"]) as pointCursor:
+        for key in results_dict.keys():
+            poly_recID = key[0]
+            poly_recpoly = key[1]
+            arcpy.AddMessage("\tRec_Poly[REC_ID]: '{}'".format(poly_recpoly))
 
-            for recpoly in pointCursor:
-                if recpoly[0] is not None:
-                    if recpoly[0] == recID[1]:
-                        arcpy.AddMessage("\t*Found RECPOLYID:\t{}".format(recpoly))
-                        arcpy.AddMessage("\t\tREC_ID should match:\t{}".format(recpoly[1]))
+            for row in pointCursor:
+                point_recPoly = row[0]
+                point_recID = row[1]
+
+                if point_recPoly is not None:
+                    if point_recPoly == poly_recpoly:
+                        arcpy.AddMessage("\t*Found RECPOLYID:\t{}".format(point_recPoly))
+                        arcpy.AddMessage("\t\tREC_ID should match:\t{}".format(point_recID))
 
                         # Add match to Dictionary
-                        results_dict[recID] = recpoly
+                        results_dict[poly_recID] = point_recID
 
 
 get_missing_ids()
 
+
+def getcentroids(featureclass):
+    arcpy.AddMessage("\nGetting Centroid Coordinate Values of ''...".format(featureclass))
+
+    centroids = []
+
+    with arcpy.da.SearchCursor(featureclass, "SHAPE@", where_clause=sql_poly) as cursor:
+        for row in cursor:
+            labelPoint = row[0].labelPoint
+            coords = [(labelPoint.X, labelPoint.Y)]
+            centroids.append(coords)
+
+    return centroids
+
+
+# with arcpy.da.InsertCursor(centroidPoints, ["SHAPE@"]) as icursor:
+#     for coords in getcentroids(recPoly):
+#         arcpy.AddMessage("COORDS: {}".format(coords))
+#         icursor.insertRow(coords)
+
+
 arcpy.AddMessage("\nRESULTS:")
 matches = []
 no_matches = []
-# no_matches = [k for k, v in results_dict.items() if v is not None]
 
 for k, v in results_dict.items():
 
@@ -73,7 +104,7 @@ for k, v in results_dict.items():
         matches.append("{}: {}".format(k, v))
 
     else:
-        no_matches.append(str(k))
+        no_matches.append(str(k[1]))
 
 if len(matches) > 0:
     arcpy.AddMessage("\tMatches: ", matches)

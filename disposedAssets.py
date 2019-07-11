@@ -163,9 +163,10 @@ main(text_result)
 arcpy.AddMessage("\nFinished Processing.\n")
 text_result += "\nFinished Processing."
 
-with open(os.path.join(downloads_dir, 'results.txt'), 'w') as txt_results:
-    txt_results.write(text_result)
-os.startfile(os.path.join(downloads_dir, 'results.txt'))
+if arcpy.GetParameter(1) is True:
+    with open(os.path.join(downloads_dir, 'results.txt'), 'w') as txt_results:
+        txt_results.write(text_result)
+    os.startfile(os.path.join(downloads_dir, 'results.txt'))
 
 # editor https://pro.arcgis.com/en/pro-app/arcpy/data-access/editor.htm
 

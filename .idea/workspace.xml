@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6d4ea19d-1e95-4e6e-bb4e-3148850b5f2f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/journeytoWork/journey_to_work.py" beforeDir="false" afterPath="$PROJECT_DIR$/journeytoWork/journey_to_work.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/journeytoWork/sum_stats_rewrite.py" beforeDir="false" afterPath="$PROJECT_DIR$/journeytoWork/sum_stats_rewrite.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,8 +62,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/journeytoWork/journey_to_work.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2091">
-                  <caret line="123" lean-forward="true" selection-start-line="123" selection-end-line="123" />
+                <state relative-caret-position="545">
+                  <caret line="150" column="87" lean-forward="true" selection-start-line="150" selection-start-column="87" selection-end-line="150" selection-end-column="87" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -628,8 +626,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/journeytoWork/journey_to_work.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2091">
-          <caret line="123" lean-forward="true" selection-start-line="123" selection-end-line="123" />
+        <state relative-caret-position="545">
+          <caret line="150" column="87" lean-forward="true" selection-start-line="150" selection-start-column="87" selection-end-line="150" selection-end-column="87" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

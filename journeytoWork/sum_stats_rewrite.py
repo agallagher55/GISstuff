@@ -5,30 +5,45 @@ from collections import defaultdict
 # Origin field with many different destinations, number of journeys for each
 # 1. Get a sum of all the different journeys for each Origin-Destination combination
 
+
 def summaryStatistics(featureclass, fieldgroup, fieldsum, workspace):
-    outputTableName = [fieldgroup, fieldsum].join('_')
-    arcpy.CreateTable(workspace, outputTableName
-    
-    origins = []
-    originJourneys = defaultdict(int) #default value of int is 0
+    outputTableName = '_'.join([fieldgroup.split('.')[1], fieldsum.split('.')[1]])
+    arcpy.AddMessage("Getting Summary Statistics for: {}".format(outputTableName))
 
-    fields = [x.name for x in arcpy.ListFields(featureclass)]
-    with arcpy.da.SearchCursor(featureclass, "*") as cursor:
+    # if not arcpy.Exists(os.path.join(workspace, outputTableName)):
+    #     arcpy.CreateTable_management(workspace, outputTableName)
+    if arcpy.Exists(os.path.join(workspace, outputTableName)):
+        arcpy.Delete_management(os.path.join(workspace, outputTableName))
+    arcpy.CreateTable_management(workspace, outputTableName)
+
+    # Add Fields
+    for field in [fieldgroup, fieldsum]:
+        field = field.split('.')[1]
+        if field not in [x.name for x in arcpy.ListFields(os.path.join(workspace, outputTableName))]:
+            try:
+                arcpy.AddField_management(in_table=os.path.join(workspace, outputTableName),
+                                          field_name=field,
+                                          field_type='DOUBLE')
+                arcpy.AddMessage("Added Field: '{}'".format(field))
+            except:
+                arcpy.AddMessage("**Not able to add field: '{}'".format(field))
+
+    originJourneys = defaultdict(int)  # default value of int is 0
+
+    with arcpy.da.SearchCursor(featureclass, [fieldgroup, fieldsum], where_clause='{} > 0'.format(fieldsum)) as cursor:
+        iCursor = arcpy.da.InsertCursor(os.path.join(workspace, outputTableName), [fieldgroup.split('.')[1], fieldsum.split('.')[1]])
         for row in cursor:
-            
-            # Names of 'Origin' and 'Journeys' may need to be ammended
-            origin = row[fields.index(fieldgroup)]
-            journeyTotal = row[fields.index(fieldsum)]
-        
-            # Sum all of the journeys for each origin-destination pair for each unique origin
+            origin = row[0]
+            journeyTotal = row[1]
+
+            arcpy.AddMessage("Census Tract: {}\tJourney Total: {}".format(origin, journeyTotal))
+
+            # Sum all of the journeys for each origin-destination pair for each unique origin\
             originJourneys[origin] += journeyTotal
-    
-    # Take resulting dictionary and write to database table
-    with arcpy.da.UpdateCursor(os.path.join(workspace, outputTableName), "*") as cursor:
-        for row in cursor:
-            for key, value in originJourneys.items():
-                row[0] = key
-                row[1] = value
 
+        arcpy.AddMessage("Updating Output table...")
+        for key, value in originJourneys.items():
+            iCursor.insertRow((key, value))
+        arcpy.AddMessage("Finished updating.")
+        del iCursor
 
-summaryStatistics(xyLine, 'Origin','Journeys', workspace)

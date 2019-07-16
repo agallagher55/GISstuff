@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6d4ea19d-1e95-4e6e-bb4e-3148850b5f2f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/journeytoWork/journey_to_work.py" beforeDir="false" afterPath="$PROJECT_DIR$/journeytoWork/journey_to_work.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,7 +51,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/disposedAssets.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="321">
+                <state relative-caret-position="2499">
                   <caret line="149" column="31" selection-start-line="149" selection-start-column="31" selection-end-line="149" selection-end-column="31" />
                   <folding>
                     <element signature="e#197#209#0" expanded="true" />
@@ -62,8 +63,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/journeytoWork/journey_to_work.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="545">
-                  <caret line="150" column="87" lean-forward="true" selection-start-line="150" selection-start-column="87" selection-end-line="150" selection-end-column="87" />
+                <state relative-caret-position="187">
+                  <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -135,7 +136,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_15.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="221">
+                <state relative-caret-position="204">
                   <caret line="13" column="36" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
@@ -147,7 +148,7 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/journeytoWork/sum_stats_rewrite.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="256">
+                <state relative-caret-position="457">
                   <caret line="33" selection-start-line="31" selection-end-line="33" />
                   <folding>
                     <element signature="e#0#12#0" expanded="true" />
@@ -192,6 +193,8 @@
       <find>exis</find>
       <find>Calcu</find>
       <find>print</find>
+      <find>Exception</find>
+      <find>Finishe</find>
     </findStrings>
     <replaceStrings>
       <replace>results_string</replace>
@@ -408,7 +411,7 @@
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32922733" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33482644" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.47144458" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -528,6 +531,7 @@
       </provider>
     </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_17.py" />
+    <entry file="file://$PROJECT_DIR$/journey_to_work.py" />
     <entry file="file://$PROJECT_DIR$/../pythonAPI/requests-arcgis-auth/pythonAPI_pete.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -542,6 +546,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/disposedAssets.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2499">
+          <caret line="149" column="31" selection-start-line="149" selection-start-column="31" selection-end-line="149" selection-end-column="31" />
+          <folding>
+            <element signature="e#197#209#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/list_featureclasses_ST.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -553,16 +567,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
           <caret line="33" selection-start-line="33" selection-end-line="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/disposedAssets.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="149" column="31" selection-start-line="149" selection-start-column="31" selection-end-line="149" selection-end-column="31" />
-          <folding>
-            <element signature="e#197#209#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -597,16 +601,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/journey_to_work.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="100" column="36" lean-forward="true" selection-start-line="100" selection-start-column="36" selection-end-line="100" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_15.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
+        <state relative-caret-position="204">
           <caret line="13" column="36" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -616,7 +613,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/journeytoWork/sum_stats_rewrite.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
+        <state relative-caret-position="457">
           <caret line="33" selection-start-line="31" selection-end-line="33" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
@@ -626,8 +623,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/journeytoWork/journey_to_work.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="545">
-          <caret line="150" column="87" lean-forward="true" selection-start-line="150" selection-start-column="87" selection-end-line="150" selection-end-column="87" />
+        <state relative-caret-position="187">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

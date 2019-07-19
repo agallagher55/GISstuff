@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/journey_to_work.py" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="6d4ea19d-1e95-4e6e-bb4e-3148850b5f2f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/list_attribute_split.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/update_fields.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/journeytoWork/journey_to_work.py" beforeDir="false" afterPath="$PROJECT_DIR$/journeytoWork/journey_to_work.py" afterDir="false" />
     </list>
@@ -18,7 +17,7 @@
     <favorites_list name="GIS_scripts" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.75934863">
+    <splitter split-orientation="horizontal" split-proportion="0.42340168">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
@@ -49,24 +48,33 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/disposedAssets.py">
+            <entry file="file://$PROJECT_DIR$/journeytoWork/journey_to_work.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2499">
-                  <caret line="149" column="31" selection-start-line="149" selection-start-column="31" selection-end-line="149" selection-end-column="31" />
+                <state relative-caret-position="153">
+                  <caret line="11" selection-start-line="11" selection-end-line="11" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://R:/ICT/ICT BIDS/Mapping Services/ArcGIS_Online/Proposed - Interactive Maps/Journey To Work/journey_to_work.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="221">
+                  <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="43" />
                   <folding>
-                    <element signature="e#197#209#0" expanded="true" />
+                    <element signature="e#208#217#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/journeytoWork/journey_to_work.py">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/update_fields.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="187">
-                  <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+                <state relative-caret-position="204">
+                  <caret line="13" selection-start-line="13" selection-end-line="13" />
                   <folding>
-                    <element signature="e#0#9#0" expanded="true" />
+                    <element signature="e#0#12#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -86,6 +94,18 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="544">
                   <caret line="33" selection-start-line="33" selection-end-line="33" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/list_attribute_split.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="729">
+                  <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
+                  <folding>
+                    <element signature="e#0#12#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -125,6 +145,30 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/disposedAssets.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1649">
+                  <caret line="97" selection-start-line="97" selection-end-line="97" />
+                  <folding>
+                    <element signature="e#197#209#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://T:/work/giss/monthly/201907july/campbev/TASK0151115_TransitApp_Request/GIS Data/list_attribute_split.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="391">
+                  <caret line="29" column="49" selection-end-line="74" />
+                  <folding>
+                    <element signature="e#0#12#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/RECid_0_null.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="1394">
@@ -145,11 +189,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/journeytoWork/sum_stats_rewrite.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="457">
-                  <caret line="33" selection-start-line="31" selection-end-line="33" />
+                <state relative-caret-position="221">
+                  <caret line="15" column="73" selection-start-line="15" selection-start-column="73" selection-end-line="15" selection-end-column="73" />
                   <folding>
                     <element signature="e#0#12#0" expanded="true" />
                   </folding>
@@ -195,13 +239,14 @@
       <find>print</find>
       <find>Exception</find>
       <find>Finishe</find>
+      <find>joinTable_</find>
     </findStrings>
     <replaceStrings>
       <replace>results_string</replace>
       <replace>log_results(</replace>
-      <replace>arcpy.AddMessage(</replace>
       <replace>recPoint</replace>
       <replace>expression_lon</replace>
+      <replace>arcpy.AddMessage(</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -231,12 +276,16 @@
         <option value="$PROJECT_DIR$/journey_to_work.py" />
         <option value="$PROJECT_DIR$/journeytoWork/sum_stats_rewrite.py" />
         <option value="$PROJECT_DIR$/journeytoWork/journey_to_work.py" />
+        <option value="$PROJECT_DIR$/update_fields.py" />
+        <option value="R:/ICT/ICT BIDS/Mapping Services/ArcGIS_Online/Proposed - Interactive Maps/Journey To Work/journey_to_work.py" />
+        <option value="T:/work/giss/monthly/201907july/campbev/TASK0151115_TransitApp_Request/GIS Data/list_attribute_split.py" />
+        <option value="$PROJECT_DIR$/list_attribute_split.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1672" />
-    <option name="y" value="-8" />
+    <option name="y" value="2" />
     <option name="width" value="1696" />
     <option name="height" value="1026" />
   </component>
@@ -264,7 +313,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.journey_to_work (1)">
+  <component name="RunManager" selected="Python.list_attribute_split">
     <configuration name="journey_to_work (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="GIS_scripts" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -286,7 +335,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="journey_to_work" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="journey_to_work (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="GIS_scripts" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="R:/ICT/ICT BIDS/Mapping Services/ArcGIS_Online/Proposed - Interactive Maps/Journey To Work" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="R:/ICT/ICT BIDS/Mapping Services/ArcGIS_Online/Proposed - Interactive Maps/Journey To Work/journey_to_work.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="list_attribute_split" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="GIS_scripts" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -298,49 +368,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/journey_to_work.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="scratch_16" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="GIS_scripts" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_16.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="scratch_17" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="GIS_scripts" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_17.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/list_attribute_split.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -370,13 +398,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="update_fields" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="GIS_scripts" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/update_fields.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.list_attribute_split" />
+        <item itemvalue="Python.journey_to_work (2)" />
+        <item itemvalue="Python.update_fields" />
         <item itemvalue="Python.journey_to_work (1)" />
         <item itemvalue="Python.sum_stats_rewrite" />
-        <item itemvalue="Python.journey_to_work" />
-        <item itemvalue="Python.scratch_17" />
-        <item itemvalue="Python.scratch_16" />
       </list>
     </recent_temporary>
   </component>
@@ -411,7 +460,7 @@
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32922733" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.47144458" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.37513998" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -546,12 +595,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/disposedAssets.py">
+    <entry file="file://$PROJECT_DIR$/journeytoWork/journey_to_work.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2499">
-          <caret line="149" column="31" selection-start-line="149" selection-start-column="31" selection-end-line="149" selection-end-column="31" />
+        <state relative-caret-position="153">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/update_fields.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
           <folding>
-            <element signature="e#197#209#0" expanded="true" />
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -613,20 +669,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/journeytoWork/sum_stats_rewrite.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="33" selection-start-line="31" selection-end-line="33" />
+        <state relative-caret-position="221">
+          <caret line="15" column="73" selection-start-line="15" selection-start-column="73" selection-end-line="15" selection-end-column="73" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/journeytoWork/journey_to_work.py">
+    <entry file="file://R:/ICT/ICT BIDS/Mapping Services/ArcGIS_Online/Proposed - Interactive Maps/Journey To Work/journey_to_work.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="221">
+          <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="43" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#208#217#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/disposedAssets.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1649">
+          <caret line="97" selection-start-line="97" selection-end-line="97" />
+          <folding>
+            <element signature="e#197#209#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://T:/work/giss/monthly/201907july/campbev/TASK0151115_TransitApp_Request/GIS Data/list_attribute_split.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="29" column="49" selection-end-line="74" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/list_attribute_split.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="729">
+          <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -34,13 +34,10 @@ arcpy.AddMessage("\nProcessing...")
 
 # Get Count of results
 with arcpy.da.SearchCursor(recPoly, ["REC_ID", "ASSETID"], where_clause=sql_poly) as cursor:
-    arcpy.AddMessage('\tPark Poly Results\n\t\t"REC_ID", "ASSETID"')
+    arcpy.AddMessage('\tRECPOLYS with {}\n\t\t"REC_ID", "ASSETID"'.format(sql_poly))
     for index, row in enumerate(cursor, 1):
         arcpy.AddMessage('\t{})\t{}'.format(index, row))
         results_dict[row] = None
-
-
-arcpy.AddMessage(results_dict)
 
 # link between polygon and point ==> RECPOLYID, poly -- ASSETID, point
 # Search points where ASSETID = RECPOLYID
@@ -57,6 +54,7 @@ def get_missing_ids():
             poly_recpoly = key[1]
             arcpy.AddMessage("\tRec_Poly[REC_ID]: '{}'".format(poly_recpoly))
 
+            # Search recPoint for matching RPLY IDS --> Get Rec ID
             for row in pointCursor:
                 point_recPoly = row[0]
                 point_recID = row[1]

@@ -53,9 +53,9 @@ arcpy.env.workspace = workspace
 # How Many Records Need Modifying? - Result of count of sql query result
 if len(disposedRecIDS) > 0:
     arcpy.AddMessage("Found {} Polygon Assets that require modification/inspection.\n\t".format(len(disposedRecIDS)))
-    arcpy.AddMessage("Disposed REC_IDs: {}".format([str(x) for x in disposedRecIDS]))
+    # arcpy.AddMessage("Disposed REC_IDs: {}".format([str(x) for x in disposedRecIDS]))
     
-    text_result += "Disposed REC_IDs: {}".format([str(x) for x in disposedRecIDS])
+    # text_result += "Disposed REC_IDs: {}".format([str(x) for x in disposedRecIDS])
     text_result += "\nFound {} Polygon Assets that require modification/inspection.\n\t".format(len(disposedRecIDS))
 else:
     arcpy.AddMessage("Found 0 Polygon Assets that need modification!")
@@ -69,8 +69,8 @@ def main(results_string):
     edit = arcpy.da.Editor(workspace)
 
     for rec in disposedRecIDS:
-        arcpy.AddMessage("\nDisposed RecID: " + str(rec))
-        results_string += "\nDisposed RecID: " + str(rec)
+        arcpy.AddMessage("Disposed RecID: " + str(rec))
+        results_string += "Disposed RecID: " + str(rec)
         
         # NEED TO FINISH THIS LOGIC - ACCOUNTS FOR POLYGONS THAT REPLACE DISPOSED POLYGONS
         # OR WHERE ONLY ONE PART OF THE ASSET (PLAYGROUND) IS DISPOSED

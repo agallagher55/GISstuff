@@ -84,7 +84,7 @@ def main(results_string):
 
             # Update REC_ID
             if editable is True:
-                edit.startEditing(False, True)
+                edit.startEditing(True, True)
                 edit.startOperation()
 
                 with arcpy.da.UpdateCursor(parkPoly, "REC_ID", where_clause=sql_disposed) as cursor:

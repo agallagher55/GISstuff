@@ -79,8 +79,8 @@ def main(results_string):
         # CHANGE REC_ID TO ZERO, KEEP REC POINT
 
         if rec in [row[parkPolyFields.index("REC_ID")] for row in polyData_notDisposed]:
-            arcpy.AddMessage("\t*{} has more than one feature".format(rec))
-            results_string += "\t*{} has more than one feature".format(rec)
+            arcpy.AddMessage("\t*{} has more than one feature, keeping {}".format(rec, os.path.basename(parkPoint)))
+            results_string += "\t*{} has more than one feature, keeping {}".format(rec, os.path.basename(parkPoint))
 
             # Update REC_ID
             if editable is True:
@@ -90,9 +90,6 @@ def main(results_string):
                 with arcpy.da.UpdateCursor(parkPoly, "REC_ID", where_clause=sql_disposed) as cursor:
                     for row in cursor:
                         if row[0] == rec:
-                            arcpy.AddMessage("MULTIPLE FEATURES {}".format(row))
-                            results_string += "MULTIPLE FEATURES: {}".format(row)
-
                             row[0] = 0
                             cursor.updateRow(row)
 

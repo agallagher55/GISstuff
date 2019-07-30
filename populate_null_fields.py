@@ -6,50 +6,47 @@ import arcpy
 import os
 import sys
 
+# BOOLEANS
+checkMultiFeature = True
+editable = True
+
 # PRIMARY VARIABLES
 workspace = r"Database Connections\Prod_GIS_Halifax.sde"
 
-featureWithNulls = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_park_recreation_feature'
-# featureWithNulls = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_outdoor_rec_poly'
+# Feature with Null attribute
+featureWithNulls = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_outdoor_rec_poly'
+fieldWithNull = 'PARK_ID'
+nullFeatureAssetID = 'ASSETID'
+
+# Feature to Reference
 featureToReference = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_hrm_parcel_parks\SDEADM.LND_hrm_park'
-# featureToReference = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_hrm_parcel_parks\SDEADM.LND_hrm_parcel'
-
-# nullFeatureAssetID = 'ASSETID'
-nullFeatureAssetID = 'REC_ID'
-
-nullFieldName = 'PARK_ID'
-# nullFieldName = 'LAND_ID'
-nullReferenceFieldName = 'ASSETID'
 nullReferenceFieldName = 'PARK_ID'
 
+# EMPTY VARIABLES
 count = 0
-checkMultiFeature = True
 checkManual = []
-
-editable = True
-edit = arcpy.da.Editor(workspace)
-
 nullMatchesDict = {}  # AssetID, ParkID
 
 # DERIVED VARIABLES
 featureToReferenceFields = [x.name for x in arcpy.ListFields(featureToReference)]
 
-sql_null = "{} IS NULL".format(nullFieldName)
+sql_null = "{} IS NULL".format(fieldWithNull)
 nullFeatures = [row[0] for row in arcpy.da.SearchCursor(featureWithNulls,
                                                         nullFeatureAssetID,
                                                         where_clause=sql_null)]
 
 arcpy.AddMessage("Found {} assets with null values: {}...".format(len(nullFeatures),
-                                                                  nullFeatures[:10]))
+                                                                  (nullFeatures[:5]))
+                                                                  )
 
 # Check assets for missing values ==> ParkID, LandID, etc.
 # How many of these features intersect it's parent feature? aka. number of recpolys, with null park_id, in a park
 if len(nullFeatures) > 0:
     arcpy.AddMessage("\nLooking for {} features that intersect {}...".format(os.path.basename(featureWithNulls),
                                                                              os.path.basename(featureToReference)))
-
+    arcpy.AddMessage("Processing...")
     for feature in nullFeatures:
-        arcpy.AddMessage("\tProcessing {}...".format(feature))
+        arcpy.AddMessage("\t{}...".format(feature))
 
         # Make Feature Layer
         nullFeatures_layer = str(feature) + "_layer"
@@ -66,7 +63,8 @@ if len(nullFeatures) > 0:
         if numIntersectFeatures > 0:  # GET Value for null value
 
             parkFeatures_layer = arcpy.MakeFeatureLayer_management(featureToReference,
-                                                                   "_".join([os.path.basename(featureToReference), feature,
+                                                                   "_".join([os.path.basename(featureToReference),
+                                                                             feature,
                                                                              "layer"]),
                                                                    )
 
@@ -77,15 +75,10 @@ if len(nullFeatures) > 0:
 
             with arcpy.da.SearchCursor(parkFeatures_layer, "*") as cursor:
                 for row in cursor:
-                    # parkID = row[featureToReferenceFields.index(nullFieldName)]
+                    # parkID = row[featureToReferenceFields.index(fieldWithNull)]
                     parkID = row[featureToReferenceFields.index(nullReferenceFieldName)]
 
-
-            # arcpy.AddMessage("\t\t*{} intersects {} where {} is {}".format(feature,
-            #                                                                os.path.basename(featureToReference),
-            #                                                                nullFieldName, parkID))
-
-            arcpy.AddMessage("\t\t*{} intersects {} where {} is {}\n".format(feature,
+            arcpy.AddMessage("\t\t*{} intersects {} where {} is {}".format(feature,
                                                                            os.path.basename(featureToReference),
                                                                            nullReferenceFieldName, parkID))
 
@@ -101,7 +94,7 @@ if len(nullFeatures) > 0:
             if feature not in checkManual:
                 nullMatchesDict[feature] = parkID
 
-print "{} features had more than one intersect".format(count)
+print "\n{} features had more than one intersect".format(count)
 
 if len(nullMatchesDict) == 0:
     arcpy.AddMessage("\nNone of your features interesect! Unable to fill in null values.")
@@ -116,23 +109,25 @@ for assetid, parkid in nullMatchesDict.items():
 update_sql = '{} in {}'.format(nullFeatureAssetID, tuple(nullMatchesDict.keys()))
 
 if editable is True:
+    edit = arcpy.da.Editor(workspace)
     edit.startEditing(True, True)
     edit.startOperation()
 
     arcpy.AddMessage("\nUpdating {} WHERE '{}'".format(os.path.basename(featureWithNulls), update_sql))
 
-    with arcpy.da.SearchCursor(featureWithNulls, [nullFeatureAssetID, nullFieldName], where_clause=update_sql) as cursor:
+    with arcpy.da.SearchCursor(featureWithNulls, [nullFeatureAssetID, fieldWithNull], where_clause=update_sql) as cursor:
         for row in cursor:
             nullAssetID = row[0]
             for assetid in nullMatchesDict.keys():
                 if nullAssetID == assetid:
                     # row[1] = nullMatchesDict[assetid]
-                    arcpy.AddMessage("\t{} - Setting {} to {}".format(assetid, nullFieldName, nullMatchesDict[assetid]))
+                    arcpy.AddMessage("\t{} - Setting {} to {}".format(assetid, fieldWithNull, nullMatchesDict[assetid]))
 
     edit.startOperation()
     edit.stopEditing(True)
 
-arcpy.AddMessage("Edit these features manually: {}".format(checkManual))
+if len(checkManual) > 0:
+    arcpy.AddMessage("Edit these features manually: {}".format(checkManual))
 
 
 

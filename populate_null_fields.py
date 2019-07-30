@@ -5,28 +5,41 @@
 import arcpy
 import os
 import sys
+import datetime
 
 # BOOLEANS
-checkMultiFeature = True
-editable = True
+editable = arcpy.GetParameterAsText(0)
+checkMultiFeature = arcpy.GetParameterAsText(1)
 
 # PRIMARY VARIABLES
-workspace = r"Database Connections\Prod_GIS_Halifax.sde"
+workspace = arcpy.GetParameterAsText(2)
 
-# Feature with Null attribute
-featureWithNulls = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_outdoor_rec_poly'
-fieldWithNull = 'PARK_ID'
-nullFeatureAssetID = 'ASSETID'
+featureWithNulls = arcpy.GetParameterAsText(3)
+fieldWithNull = arcpy.GetParameterAsText(4)
+nullFeatureAssetID = arcpy.GetParameterAsText(5)
 
 # Feature to Reference
-featureToReference = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_hrm_parcel_parks\SDEADM.LND_hrm_park'
-nullReferenceFieldName = 'PARK_ID'
+featureToReference = arcpy.GetParameterAsText(6)
+nullReferenceFieldName = arcpy.GetParameterAsText(7)
+
+# NON SCRIPT TOOL TEST PARAMETERS
+# editable = 'true'
+# checkMultiFeature = 'true'
+# workspace = r"Database Connections\Prod_GIS_Halifax.sde"
+# Feature with Null attribute
+# featureWithNulls = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_outdoor_rec_poly'
+# fieldWithNull = 'PARK_ID'
+# nullFeatureAssetID = 'ASSETID'
+
 
 # EMPTY VARIABLES
 count = 0
 checkManual = []
 nullMatchesDict = {}  # AssetID, ParkID
-
+resultText = str(datetime.datetime.now()) + "\nParameters: {}".format("\n\t".join([editable, checkMultiFeature,
+                                                                                   workspace, featureWithNulls,
+                                                                                   fieldWithNull, nullFeatureAssetID,
+                                                                                   featureToReference, nullReferenceFieldName]))
 # DERIVED VARIABLES
 featureToReferenceFields = [x.name for x in arcpy.ListFields(featureToReference)]
 
@@ -36,8 +49,8 @@ nullFeatures = [row[0] for row in arcpy.da.SearchCursor(featureWithNulls,
                                                         where_clause=sql_null)]
 
 arcpy.AddMessage("Found {} assets with null values: {}...".format(len(nullFeatures),
-                                                                  (nullFeatures[:5]))
-                                                                  )
+                                                                  (nullFeatures[:5])))
+resultText += "Found {} assets with null values...".format(len(nullFeatures))
 
 # Check assets for missing values ==> ParkID, LandID, etc.
 # How many of these features intersect it's parent feature? aka. number of recpolys, with null park_id, in a park
@@ -84,7 +97,7 @@ if len(nullFeatures) > 0:
 
             # Get count of features that intersect the park
             # IF NUMBER OF INTERSECTS > 1, PUT ASIDE FOR MANUAL REVIEW
-            if checkMultiFeature is True:
+            if checkMultiFeature == 'true':
                 numIntersectFeaturesII = int(arcpy.GetCount_management(parkFeatures_layer).getOutput(0))
 
                 if numIntersectFeaturesII > 1:
@@ -94,21 +107,23 @@ if len(nullFeatures) > 0:
             if feature not in checkManual:
                 nullMatchesDict[feature] = parkID
 
-print "\n{} features had more than one intersect".format(count)
+arcpy.AddMessage("\n{} features had more than one intersect".format(count))
 
 if len(nullMatchesDict) == 0:
     arcpy.AddMessage("\nNone of your features interesect! Unable to fill in null values.")
     sys.exit()
 
 arcpy.AddMessage("\nRESULTS: {} - {}".format(nullFeatureAssetID, nullReferenceFieldName))
+resultText += "\nRESULTS: {} - {}".format(nullFeatureAssetID, nullReferenceFieldName)
+
 for assetid, parkid in nullMatchesDict.items():
     arcpy.AddMessage("\t{} - {}".format(assetid, parkid))
-
+    resultText += "\n\t{} - {}".format(assetid, parkid)
 
 # If asset is missing value, select by intersect with matching featureclass to get value
 update_sql = '{} in {}'.format(nullFeatureAssetID, tuple(nullMatchesDict.keys()))
 
-if editable is True:
+if editable == 'true':
     edit = arcpy.da.Editor(workspace)
     edit.startEditing(True, True)
     edit.startOperation()
@@ -122,6 +137,7 @@ if editable is True:
                 if nullAssetID == assetid:
                     # row[1] = nullMatchesDict[assetid]
                     arcpy.AddMessage("\t{} - Setting {} to {}".format(assetid, fieldWithNull, nullMatchesDict[assetid]))
+                    resultText += "\n\t{} - Set {} to {}".format(assetid, fieldWithNull, nullMatchesDict[assetid])
 
     edit.startOperation()
     edit.stopEditing(True)
@@ -130,4 +146,6 @@ if len(checkManual) > 0:
     arcpy.AddMessage("Edit these features manually: {}".format(checkManual))
 
 
-
+with open(os.path.join(os.path.expanduser('~'), "Downloads", "results.txt".format(datetime.datetime.now())
+                       ), 'w') as txt_results:
+    txt_results.write(resultText)

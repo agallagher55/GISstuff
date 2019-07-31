@@ -50,7 +50,7 @@ nullFeatures = [row[0] for row in arcpy.da.SearchCursor(featureWithNulls,
 
 arcpy.AddMessage("Found {} assets with null values: {}...".format(len(nullFeatures),
                                                                   (nullFeatures[:5])))
-resultText += "Found {} assets with null values...".format(len(nullFeatures))
+resultText += "\n\nFound {} assets with null values...\n".format(len(nullFeatures))
 
 # Check assets for missing values ==> ParkID, LandID, etc.
 # How many of these features intersect it's parent feature? aka. number of recpolys, with null park_id, in a park
@@ -114,15 +114,14 @@ if len(nullMatchesDict) == 0:
     sys.exit()
 
 arcpy.AddMessage("\nRESULTS: {} - {}".format(nullFeatureAssetID, nullReferenceFieldName))
-resultText += "\nRESULTS: {} - {}".format(nullFeatureAssetID, nullReferenceFieldName)
 
 for assetid, parkid in nullMatchesDict.items():
     arcpy.AddMessage("\t{} - {}".format(assetid, parkid))
-    resultText += "\n\t{} - {}".format(assetid, parkid)
 
 # If asset is missing value, select by intersect with matching featureclass to get value
 update_sql = '{} in {}'.format(nullFeatureAssetID, tuple(nullMatchesDict.keys()))
 
+editCount = 0
 if editable == 'true':
     edit = arcpy.da.Editor(workspace)
     edit.startEditing(True, True)
@@ -130,22 +129,31 @@ if editable == 'true':
 
     arcpy.AddMessage("\nUpdating {} WHERE '{}'".format(os.path.basename(featureWithNulls), update_sql))
 
-    with arcpy.da.SearchCursor(featureWithNulls, [nullFeatureAssetID, fieldWithNull], where_clause=update_sql) as cursor:
+    with arcpy.da.UpdateCursor(featureWithNulls, [nullFeatureAssetID, fieldWithNull], where_clause=update_sql) as cursor:
         for row in cursor:
             nullAssetID = row[0]
             for assetid in nullMatchesDict.keys():
                 if nullAssetID == assetid:
-                    # row[1] = nullMatchesDict[assetid]
+                    row[1] = nullMatchesDict[assetid]
                     arcpy.AddMessage("\t{} - Setting {} to {}".format(assetid, fieldWithNull, nullMatchesDict[assetid]))
+
+                    cursor.updateRow(row)
+                    editCount += 1
                     resultText += "\n\t{} - Set {} to {}".format(assetid, fieldWithNull, nullMatchesDict[assetid])
 
     edit.startOperation()
     edit.stopEditing(True)
 
+arcpy.AddMessage("Updated {} features in total.".format(editCount))
+resultText += "\n\nUpdated {} features in total.".format(editCount)
+
 if len(checkManual) > 0:
     arcpy.AddMessage("Edit these features manually: {}".format(checkManual))
 
-
-with open(os.path.join(os.path.expanduser('~'), "Downloads", "results.txt".format(datetime.datetime.now())
+with open(os.path.join(os.path.expanduser('~'),
+                       "Downloads",
+                       "{}_{}_results.txt".format(os.path.basename(featureWithNulls).split(".")[1], fieldWithNull)
                        ), 'w') as txt_results:
     txt_results.write(resultText)
+
+arcpy.AddMessage("\n\n**CHECK DOWNLOADS FOLDER FOR REPORT OF RESULTS")

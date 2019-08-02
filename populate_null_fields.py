@@ -22,6 +22,10 @@ nullFeatureAssetID = arcpy.GetParameterAsText(5)
 featureToReference = arcpy.GetParameterAsText(6)
 nullReferenceFieldName = arcpy.GetParameterAsText(7)
 
+recPolyParkID = arcpy.GetParameterAsText(8)
+recPolyLandID = arcpy.GetParameterAsText(9)
+
+
 # NON SCRIPT TOOL TEST PARAMETERS
 # editable = 'true'
 # checkMultiFeature = 'true'
@@ -32,130 +36,172 @@ nullReferenceFieldName = arcpy.GetParameterAsText(7)
 # nullFeatureAssetID = 'ASSETID'
 
 
-# EMPTY VARIABLES
-count = 0
-checkManual = []
-nullMatchesDict = {}  # AssetID, ParkID
-resultText = str(datetime.datetime.now()) + "\nParameters: \n{}".format("\n\t".join([editable, checkMultiFeature,
-                                                                                   workspace, featureWithNulls,
-                                                                                   fieldWithNull, nullFeatureAssetID,
-                                                                                   featureToReference, nullReferenceFieldName]))
-# DERIVED VARIABLES
-featureToReferenceFields = [x.name for x in arcpy.ListFields(featureToReference)]
+def main(featureWithNulls, fieldWithNull, nullFeatureAssetID, featureToReference, nullReferenceFieldName):
+    # EMPTY VARIABLES
 
-sql_null = "{} IS NULL".format(fieldWithNull)
-nullFeatures = [row[0] for row in arcpy.da.SearchCursor(featureWithNulls,
-                                                        nullFeatureAssetID,
-                                                        where_clause=sql_null)]
+    count = 0
+    checkManual = []
+    nullMatchesDict = {}  # AssetID, ParkID
+    resultText = str(datetime.datetime.now()) + "\nParameters: \n{}".format("\n\t".join([editable, checkMultiFeature,
+                                                                                       workspace, featureWithNulls,
+                                                                                       fieldWithNull, nullFeatureAssetID,
+                                                                                       featureToReference, nullReferenceFieldName]))
+    # DERIVED VARIABLES
+    featureToReferenceFields = [x.name for x in arcpy.ListFields(featureToReference)]
 
-arcpy.AddMessage("Found {} assets with null values: {}...".format(len(nullFeatures),
-                                                                  (nullFeatures[:5])))
-resultText += "\n\nFound {} assets with null values...\n".format(len(nullFeatures))
+    sql_null = "{} IS NULL".format(fieldWithNull)
+    nullFeatures = [row[0] for row in arcpy.da.SearchCursor(featureWithNulls,
+                                                            nullFeatureAssetID,
+                                                            where_clause=sql_null)]
 
-# Check assets for missing values ==> ParkID, LandID, etc.
-# How many of these features intersect it's parent feature? aka. number of recpolys, with null park_id, in a park
-if len(nullFeatures) > 0:
-    arcpy.AddMessage("\nLooking for {} features that intersect {}...".format(os.path.basename(featureWithNulls),
-                                                                             os.path.basename(featureToReference)))
-    arcpy.AddMessage("Processing...")
-    for feature in nullFeatures:
-        arcpy.AddMessage("\t{}...".format(feature))
+    arcpy.AddMessage("Found {} assets with null values: {}...".format(len(nullFeatures),
+                                                                      (nullFeatures[:5])))
+    resultText += "\n\nFound {} assets with null values...\n".format(len(nullFeatures))
 
-        # Make Feature Layer
-        nullFeatures_layer = str(feature) + "_layer"
-        nullFeatures = arcpy.MakeFeatureLayer_management(featureWithNulls,
-                                                         nullFeatures_layer,
-                                                         where_clause="{} LIKE '{}'".format(nullFeatureAssetID, feature))
+    # Check assets for missing values ==> ParkID, LandID, etc.
+    # How many of these features intersect it's parent feature? aka. number of recpolys, with null park_id, in a park
+    if len(nullFeatures) > 0:
+        arcpy.AddMessage("\nLooking for {} features that intersect {}...".format(os.path.basename(featureWithNulls),
+                                                                                 os.path.basename(featureToReference)))
+        arcpy.AddMessage("Processing...")
+        for feature in nullFeatures:
+            arcpy.AddMessage("\t{}...".format(feature))
 
-        # Null value feature has centre in Parent Feature
-        arcpy.SelectLayerByLocation_management(nullFeatures_layer,
-                                               "HAVE_THEIR_CENTER_IN",
-                                               featureToReference)
+            # Make Feature Layer
+            nullFeatures_layer = str(feature) + "_" + os.path.basename(featureToReference) + "_layer"
+            nullFeatures = arcpy.MakeFeatureLayer_management(featureWithNulls,
+                                                             nullFeatures_layer,
+                                                             where_clause="{} LIKE '{}'".format(nullFeatureAssetID, feature))
 
-        numIntersectFeatures = int(arcpy.GetCount_management(nullFeatures_layer).getOutput(0))
-        if numIntersectFeatures > 0:  # GET Value for null value
+            # Null value feature has centre in Parent Feature
+            arcpy.SelectLayerByLocation_management(nullFeatures_layer,
+                                                   "HAVE_THEIR_CENTER_IN",
+                                                   featureToReference)
 
-            parkFeatures_layer = arcpy.MakeFeatureLayer_management(featureToReference,
-                                                                   "_".join([os.path.basename(featureToReference),
-                                                                             feature,
-                                                                             "layer"]),
-                                                                   )
+            numIntersectFeatures = int(arcpy.GetCount_management(nullFeatures_layer).getOutput(0))
+            if numIntersectFeatures > 0:  # GET Value for null value
 
-            # GET WHICH PARKS INTERSECT OUR NULL FEATURES - inverse of before
-            arcpy.SelectLayerByLocation_management(parkFeatures_layer,
-                                                   "INTERSECT",
-                                                   nullFeatures)  # SHOULD BE ABLE TO USE 'nullFeatures'
+                parkFeatures_layer = arcpy.MakeFeatureLayer_management(featureToReference,
+                                                                       "_".join([os.path.basename(featureToReference),
+                                                                                 feature,
+                                                                                 "layer"]),
+                                                                       )
 
-            with arcpy.da.SearchCursor(parkFeatures_layer, "*") as cursor:
-                for row in cursor:
-                    # parkID = row[featureToReferenceFields.index(fieldWithNull)]
-                    parkID = row[featureToReferenceFields.index(nullReferenceFieldName)]
+                # GET WHICH PARKS INTERSECT OUR NULL FEATURES - inverse of before
+                arcpy.SelectLayerByLocation_management(parkFeatures_layer,
+                                                       "INTERSECT",
+                                                       nullFeatures)  # SHOULD BE ABLE TO USE 'nullFeatures'
 
-            arcpy.AddMessage("\t\t*{} intersects {} where {} is {}".format(feature,
-                                                                           os.path.basename(featureToReference),
-                                                                           nullReferenceFieldName, parkID))
+                with arcpy.da.SearchCursor(parkFeatures_layer, "*") as cursor:
+                    for row in cursor:
+                        # parkID = row[featureToReferenceFields.index(fieldWithNull)]
+                        parkID = row[featureToReferenceFields.index(nullReferenceFieldName)]
 
-            # Get count of features that intersect the park
-            # IF NUMBER OF INTERSECTS > 1, PUT ASIDE FOR MANUAL REVIEW
-            if checkMultiFeature == 'true':
-                numIntersectFeaturesII = int(arcpy.GetCount_management(parkFeatures_layer).getOutput(0))
+                arcpy.AddMessage("\t\t*{} intersects {} where {} is {}".format(feature,
+                                                                               os.path.basename(featureToReference),
+                                                                               nullReferenceFieldName, parkID))
 
-                if numIntersectFeaturesII > 1:
-                    count += 1
-                    checkManual.append(feature)
+                # Get count of features that intersect the park
+                # IF NUMBER OF INTERSECTS > 1, PUT ASIDE FOR MANUAL REVIEW
+                if checkMultiFeature == 'true':
+                    numIntersectFeaturesII = int(arcpy.GetCount_management(parkFeatures_layer).getOutput(0))
 
-            if feature not in checkManual:
-                nullMatchesDict[feature] = parkID
+                    if numIntersectFeaturesII > 1:
+                        count += 1
+                        checkManual.append(feature)
 
-arcpy.AddMessage("\n{} features had more than one intersect".format(count))
+                if feature not in checkManual:
+                    nullMatchesDict[feature] = parkID
 
-if len(nullMatchesDict) == 0:
-    arcpy.AddMessage("\nNone of your features interesect! Unable to fill in null values.")
-    sys.exit()
+    arcpy.AddMessage("\n{} features had more than one intersect".format(count))
 
-arcpy.AddMessage("\nRESULTS: {} - {}".format(nullFeatureAssetID, nullReferenceFieldName))
+    if len(nullMatchesDict) == 0:
+        arcpy.AddMessage("\nNone of your features interesect! Unable to fill in null values.")
+        sys.exit()
 
-for assetid, parkid in nullMatchesDict.items():
-    arcpy.AddMessage("\t{} - {}".format(assetid, parkid))
+    arcpy.AddMessage("\nRESULTS: {} - {}".format(nullFeatureAssetID, nullReferenceFieldName))
 
-# If asset is missing value, select by intersect with matching featureclass to get value
-update_sql = '{} in {}'.format(nullFeatureAssetID, tuple(nullMatchesDict.keys()))
+    for assetid, parkid in nullMatchesDict.items():
+        arcpy.AddMessage("\t{} - {}".format(assetid, parkid))
 
-editCount = 0
-if editable == 'true':
-    edit = arcpy.da.Editor(workspace)
-    edit.startEditing(True, True)
-    edit.startOperation()
+    # If asset is missing value, select by intersect with matching featureclass to get value
+    update_sql = '{} in {}'.format(nullFeatureAssetID, tuple(nullMatchesDict.keys()))
 
-    arcpy.AddMessage("\nUpdating {} WHERE '{}'".format(os.path.basename(featureWithNulls), update_sql))
+    editCount = 0
+    if editable == 'true':
+        edit = arcpy.da.Editor(workspace)
+        edit.startEditing(True, True)
+        edit.startOperation()
 
-    with arcpy.da.UpdateCursor(featureWithNulls, [nullFeatureAssetID, fieldWithNull], where_clause=update_sql) as cursor:
-        for row in cursor:
-            nullAssetID = row[0]
-            for assetid in nullMatchesDict.keys():
-                if nullAssetID == assetid:
-                    row[1] = nullMatchesDict[assetid]
-                    arcpy.AddMessage("\t{} - Setting {} to {}".format(assetid, fieldWithNull, nullMatchesDict[assetid]))
+        arcpy.AddMessage("\nUpdating {} WHERE '{}'".format(os.path.basename(featureWithNulls), update_sql))
 
-                    cursor.updateRow(row)
-                    editCount += 1
-                    resultText += "\n\t{} - Set {} to {}".format(assetid, fieldWithNull, nullMatchesDict[assetid])
+        with arcpy.da.UpdateCursor(featureWithNulls, [nullFeatureAssetID, fieldWithNull], where_clause=update_sql) as cursor:
+            for row in cursor:
+                nullAssetID = row[0]
+                for assetid in nullMatchesDict.keys():
+                    if nullAssetID == assetid:
+                        row[1] = nullMatchesDict[assetid]
+                        arcpy.AddMessage("\t{} - Setting {} to {}".format(assetid, fieldWithNull, nullMatchesDict[assetid]))
 
-    edit.startOperation()
-    edit.stopEditing(True)
+                        cursor.updateRow(row)
+                        editCount += 1
+                        resultText += "\n\t{} - Set {} to {}".format(assetid, fieldWithNull, nullMatchesDict[assetid])
 
-arcpy.AddMessage("Updated {} features in total.".format(editCount))
-resultText += "\n\nUpdated {} features in total or {}% of the total null.".format(editCount,
-                                                                                  (editCount/len(nullFeatures))*100)
+        edit.startOperation()
+        edit.stopEditing(True)
 
-if len(checkManual) > 0:
-    arcpy.AddMessage("Edit these features manually: {}".format(checkManual))
-    resultText += "\n\nEdit these features manually: {}".format(checkManual)
+    arcpy.AddMessage("Updated {} features in total.".format(editCount))
+    resultText += "\n\nUpdated {} features in total or {}% of the total null.".format(editCount,
+                                                                                      (editCount/len(nullFeatures))*100)
 
-with open(os.path.join(os.path.expanduser('~'),
-                       "Downloads",
-                       "{}_{}_results.txt".format(os.path.basename(featureWithNulls).split(".")[1], fieldWithNull)
-                       ), 'w') as txt_results:
-    txt_results.write(resultText)
+    if len(checkManual) > 0:
+        arcpy.AddMessage("Edit these features manually: {}".format(checkManual))
+        resultText += "\n\nEdit these features manually: {}".format(checkManual)
 
-arcpy.AddMessage("\n\n**CHECK DOWNLOADS FOLDER FOR REPORT OF RESULTS")
+    with open(os.path.join(os.path.expanduser('~'),
+                           "Downloads",
+                           "{}_{}_results.txt".format(os.path.basename(featureWithNulls).split(".")[1], fieldWithNull)
+                           ), 'w') as txt_results:
+        txt_results.write(resultText)
+
+    arcpy.AddMessage("\n\n**CHECK DOWNLOADS FOLDER FOR REPORT OF RESULTS")
+
+# VARIABLES
+# featureWithNulls, fieldWithNull, nullFeatureAssetID, featureToReference, nullReferenceFieldName
+
+
+# featureWithNulls, fieldWithNull, nullFeatureAssetID, featureToReference, nullReferenceFieldName
+
+
+if recPolyParkID == 'true':
+    # PARK ID
+    featureWithNulls = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_outdoor_rec_poly'
+    nullFeatureAssetID = 'ASSETID'
+    fieldWithNull = 'PARK_ID'
+
+    featureToReference = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_hrm_parcel_parks\SDEADM.LND_hrm_park'
+    nullReferenceFieldName = 'PARK_ID'
+
+    main(featureWithNulls, fieldWithNull, nullFeatureAssetID, featureToReference, nullReferenceFieldName)
+
+if recPolyLandID == 'true':
+    # LAND ID
+    featureWithNulls = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_outdoor_rec_poly'
+    nullFeatureAssetID = 'ASSETID'
+    fieldWithNull = 'LAND_ID'
+
+    featureToReference = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_hrm_parcel_parks\SDEADM.LND_hrm_parcel'
+    nullReferenceFieldName = 'ASSET_ID'
+
+    main(featureWithNulls, fieldWithNull, nullFeatureAssetID, featureToReference, nullReferenceFieldName)
+
+# if recPolyCivicID == 'true':
+#     # CIVIC ID
+#     featureWithNulls = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_outdoor_rec_poly'
+#     fieldWithNull = 'CIV_ID'
+#     nullFeatureAssetID = 'ASSETID'
+#     featureToReference = r'Database Connections\Prod_GIS_Halifax.sde\SDEADM.LND_civic_address'
+#     nullReferenceFieldName = 'CIV_ID'
+
+else:
+    main(featureWithNulls, fieldWithNull, nullFeatureAssetID, featureToReference, nullReferenceFieldName)

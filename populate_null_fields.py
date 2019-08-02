@@ -36,7 +36,7 @@ nullReferenceFieldName = arcpy.GetParameterAsText(7)
 count = 0
 checkManual = []
 nullMatchesDict = {}  # AssetID, ParkID
-resultText = str(datetime.datetime.now()) + "\nParameters: {}".format("\n\t".join([editable, checkMultiFeature,
+resultText = str(datetime.datetime.now()) + "\nParameters: \n{}".format("\n\t".join([editable, checkMultiFeature,
                                                                                    workspace, featureWithNulls,
                                                                                    fieldWithNull, nullFeatureAssetID,
                                                                                    featureToReference, nullReferenceFieldName]))
@@ -145,10 +145,12 @@ if editable == 'true':
     edit.stopEditing(True)
 
 arcpy.AddMessage("Updated {} features in total.".format(editCount))
-resultText += "\n\nUpdated {} features in total.".format(editCount)
+resultText += "\n\nUpdated {} features in total or {}% of the total null.".format(editCount,
+                                                                                  (editCount/len(nullFeatures))*100)
 
 if len(checkManual) > 0:
     arcpy.AddMessage("Edit these features manually: {}".format(checkManual))
+    resultText += "\n\nEdit these features manually: {}".format(checkManual)
 
 with open(os.path.join(os.path.expanduser('~'),
                        "Downloads",

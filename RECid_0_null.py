@@ -9,12 +9,14 @@ If no PRF point exists to represent that feature, please create a PRF and record
 # Add Option for log as textfile
 import arcpy
 import os
+import sys
+import datetime
 
 arcpy.AddMessage("\nSetting Variables...")
 editable = arcpy.GetParameterAsText(0)
 user_dir = os.path.expanduser('~')
-centroidPoints = r'C:\Users\gallaga\testing\New File Geodatabase.gdb\centroids'
-
+date = datetime.datetime.now().date()
+results_txtfile = os.path.join(os.path.expanduser('~'), "Downloads", "{}_{}.txt".format("recNull0", date))
 
 # VARIALBLES
 workspace = r"Database Connections\Prod_GIS_Halifax.sde"
@@ -70,27 +72,6 @@ def get_missing_ids():
 
 get_missing_ids()
 
-
-def getcentroids(featureclass):
-    arcpy.AddMessage("\nGetting Centroid Coordinate Values of ''...".format(featureclass))
-
-    centroids = []
-
-    with arcpy.da.SearchCursor(featureclass, "SHAPE@", where_clause=sql_poly) as cursor:
-        for row in cursor:
-            labelPoint = row[0].labelPoint
-            coords = [(labelPoint.X, labelPoint.Y)]
-            centroids.append(coords)
-
-    return centroids
-
-
-# with arcpy.da.InsertCursor(centroidPoints, ["SHAPE@"]) as icursor:
-#     for coords in getcentroids(recPoly):
-#         arcpy.AddMessage("COORDS: {}".format(coords))
-#         icursor.insertRow(coords)
-
-
 arcpy.AddMessage("\nRESULTS:")
 matches = []
 no_matches = []
@@ -104,13 +85,20 @@ for k, v in results_dict.items():
     else:
         no_matches.append(str(k[1]))
 
-if len(matches) > 0:
-    arcpy.AddMessage("\tMatches: ", matches)
-    # Add the rec_ID from rec point to rec poly?
-
-if len(no_matches) > 0:
-    arcpy.AddMessage("\t**Need to create PARK REC FEATURES for;\n\t\t{}".format('\n\t\t'.join(no_matches)))
 
 # Can create text results
-# Still need to make actual edits
+with open(results_txtfile, 'w') as txt_results:
 
+    if len(matches) > 0:
+        arcpy.AddMessage("\tMatches: ", matches)
+        txt_results.write("\tMatches: ", matches)
+        # Add the rec_ID from rec point to rec poly?
+
+    if len(no_matches) > 0:
+        arcpy.AddMessage("\t**Need to create PARK REC FEATURES for;\n\t\t{}".format('\n\t\t'.join(no_matches)))
+        txt_results.write("\t**Need to create PARK REC FEATURES for;\n\t\t{}".format('\n\t\t'.join(no_matches)))
+
+
+os.startfile(results_txtfile)
+
+# Still need to make actual edits

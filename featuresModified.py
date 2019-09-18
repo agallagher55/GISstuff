@@ -6,12 +6,12 @@ import os
 For each Feature Class
 Get records modified within the last 5 days
 """
-daysOld = 7
+daysOld = 30
 today = datetime.date.today()
+foreignEdits = False
 
 user_dir = os.path.expanduser('~')
-date = datetime.datetime.now().date()
-results_txtfile = os.path.join(os.path.expanduser('~'), "Downloads", "{}_{}.txt".format("lastModifiedFeatures", date))
+results_txtfile = os.path.join(os.path.expanduser('~'), "Downloads", "{}_{}.txt".format("lastModifiedFeatures", today))
 
 workspace = r'Database Connections\Prod_GIS_Halifax.sde'
 
@@ -39,7 +39,8 @@ with open(results_txtfile, 'w') as txt_results:
                 try:
                     daysDelta = (today - datetime.datetime.date(row[fields.index('MODDATE')])).days
 
-                    if daysDelta <= daysOld:
+                    if daysDelta <= daysOld and modifiedBy != 'GALLAGA':
+                        foreignEdits = True
                         arcpy.AddMessage("\n\t{} - {}\n\t{} - {}".format(
                             v[0], row[fields.index(v[0])], v[1], row[fields.index(v[1])]))
                         arcpy.AddMessage("\n\tLAST MODIFIED: {} days ago \n\tBY: {}".format(daysDelta, modifiedBy))
@@ -50,5 +51,8 @@ with open(results_txtfile, 'w') as txt_results:
                 except:
                     continue
 
-os.startfile(results_txtfile)
+if foreignEdits is True:
+    os.startfile(results_txtfile)
+else:
+    os.remove(results_txtfile)
 arcpy.AddMessage("\nFinished Processing.")

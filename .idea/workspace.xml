@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6d4ea19d-1e95-4e6e-bb4e-3148850b5f2f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RECid_0_null.py" beforeDir="false" afterPath="$PROJECT_DIR$/RECid_0_null.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/featuresModified.py" beforeDir="false" afterPath="$PROJECT_DIR$/featuresModified.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -147,11 +148,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/RECid_0_null.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="442">
-                  <caret line="89" selection-start-line="89" selection-end-line="89" selection-end-column="47" />
+                <state relative-caret-position="310">
+                  <caret line="105" selection-start-line="105" selection-end-line="105" selection-end-column="38" />
                   <folding>
                     <element signature="e#302#314#0" expanded="true" />
                   </folding>
@@ -159,14 +160,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_18.py">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/featuresModified.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="401">
-                  <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
-                  <folding>
-                    <element signature="e#0#12#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="102">
+                  <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
                 </state>
               </provider>
             </entry>
@@ -226,7 +224,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>joinTable_</find>
       <find>fieldNullValue</find>
       <find>parkFi</find>
       <find>featureAssetID</find>
@@ -256,6 +253,7 @@
       <find>bulk</find>
       <find>supers</find>
       <find>learning</find>
+      <find>foregin</find>
     </findStrings>
     <replaceStrings>
       <replace>results_string</replace>
@@ -270,6 +268,7 @@
       <replace>featureToReference</replace>
       <replace>featureToReferenceFields</replace>
       <replace>fieldWithNull</replace>
+      <replace>foreign</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -304,10 +303,11 @@
         <option value="$PROJECT_DIR$/complete_ParkID_LandID.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_17.py" />
         <option value="$PROJECT_DIR$/populate_null_fields.py" />
-        <option value="$PROJECT_DIR$/RECid_0_null.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_19.py" />
         <option value="$PROJECT_DIR$/../Apps/Food App/classify_food_type.py" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_18.py" />
+        <option value="$PROJECT_DIR$/featuresModified.py" />
+        <option value="$PROJECT_DIR$/RECid_0_null.py" />
       </list>
     </option>
   </component>
@@ -341,7 +341,28 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.scratch_18">
+  <component name="RunManager" selected="Python.RECid_0_null">
+    <configuration name="RECid_0_null" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="GIS_scripts" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/RECid_0_null.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="classify_food_type" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="GIS_scripts" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -363,7 +384,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="scratch_16" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="featuresModified" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="GIS_scripts" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -371,32 +392,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_16.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="scratch_17" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="GIS_scripts" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_17.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/featuresModified.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -449,11 +449,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.RECid_0_null" />
+        <item itemvalue="Python.featuresModified" />
         <item itemvalue="Python.scratch_18" />
         <item itemvalue="Python.classify_food_type" />
         <item itemvalue="Python.scratch_19" />
-        <item itemvalue="Python.scratch_16" />
-        <item itemvalue="Python.scratch_17" />
       </list>
     </recent_temporary>
   </component>
@@ -510,7 +510,7 @@
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32922733" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3449048" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.38969764" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -788,22 +788,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RECid_0_null.py">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_18.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="89" selection-start-line="89" selection-end-line="89" selection-end-column="47" />
+        <state relative-caret-position="95">
+          <caret line="33" column="65" lean-forward="true" selection-start-line="33" selection-start-column="65" selection-end-line="33" selection-end-column="65" />
           <folding>
-            <element signature="e#302#314#0" expanded="true" />
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_18.py">
+    <entry file="file://$PROJECT_DIR$/featuresModified.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+        <state relative-caret-position="102">
+          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RECid_0_null.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="105" selection-start-line="105" selection-end-line="105" selection-end-column="38" />
           <folding>
-            <element signature="e#0#12#0" expanded="true" />
+            <element signature="e#302#314#0" expanded="true" />
           </folding>
         </state>
       </provider>

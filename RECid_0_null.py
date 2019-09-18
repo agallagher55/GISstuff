@@ -85,20 +85,25 @@ for k, v in results_dict.items():
     else:
         no_matches.append(str(k[1]))
 
+try:
+    no_matches.remove('RPLY2064')
+    no_matches.remove('RPLY2067')
+except:
+    pass
 
 # Can create text results
 with open(results_txtfile, 'w') as txt_results:
 
     if len(matches) > 0:
-        arcpy.AddMessage("\tMatches: ", matches)
-        txt_results.write("\tMatches: ", matches)
+        arcpy.AddMessage("Matches: ", matches)
+        txt_results.write("Matches: ", matches)
         # Add the rec_ID from rec point to rec poly?
 
-    if len(no_matches) > 0:
-        arcpy.AddMessage("\t**Need to create PARK REC FEATURES for;\n\t\t{}".format('\n\t\t'.join(no_matches)))
-        txt_results.write("\t**Need to create PARK REC FEATURES for;\n\t\t{}".format('\n\t\t'.join(no_matches)))
+    if len(no_matches) > 0 and ('RPLY2064' or 'RPLY2067' not in no_matches):
+        arcpy.AddMessage("**Need to create PARK REC FEATURES for;\n\t\t{}".format('\n\t\t'.join(no_matches)))
+        txt_results.write("**Need to create PARK REC FEATURES for;\n\t\t{}".format('\n\t\t'.join(no_matches)))
 
-
-os.startfile(results_txtfile)
+if os.stat(results_txtfile).st_size > 0:    # Check if size is > 0
+    os.startfile(results_txtfile)
 
 # Still need to make actual edits

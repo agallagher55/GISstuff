@@ -1,5 +1,8 @@
 import os
 import pandas as pd
+import re
+import win32com.client
+
 
 """
 September 19, 2019
@@ -69,8 +72,44 @@ def findfile(subdivision, all=False):
 
     print("\nFOUND {} RESULTS".format(count))
 
+# EMAIL STUFF
+outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
+inbox = outlook.GetDefaultFolder(6)
+
+messages = inbox.Items
+messages.Sort("[ReceivedTime]", True)
+
+message = messages.GetFirst()
+rec_time = message.CreationTime
+body_content = message.body
+subj_line = message.subject
+
+subNumbers = []
+
+for i in range(100):
+# while message:
+    # print(message.subject, message.CreationTime)
+    try:
+        if 'ubdivision' in message.body:
+            # print(message.subject, message.CreationTime)
+            # print(message.body, "\n\n\t\t")
+
+            sub = re.search(r"Subdivision \d+", message.body)
+            sub = str(sub.group()).split('Subdivision')[1].strip()
+            subNumbers.append(sub)
+            print("\tFound Subdivision:\t'{}'".format(sub))
+
+    except Exception as e:
+        print("\t**", str(e))
+
+    message = messages.GetNext()
+
+print("SUBS: {}".format(subNumbers))
+
+for x in subNumbers:
+    findfile(x)
 
 # findfile(13891, True)
 
-sub = input("What is your subdivision number? ")
-findfile(sub)
+# sub = input("What is your subdivision number? ")
+# findfile(sub)

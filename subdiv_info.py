@@ -11,6 +11,7 @@ September 19, 2019
 - Read comments field
 """
 
+
 def getcomments(filepath):
     # 1 Read COMMENTS from .xlsx
 
@@ -74,9 +75,11 @@ def findfile(subdivision, all=False):
 
 # EMAIL STUFF
 outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
-inbox = outlook.GetDefaultFolder(6)
 
-messages = inbox.Items
+root_folder = outlook.Folders.Item(1)
+subFolder = root_folder.Folders['Tickets'].Folders['Tasks'].Folders['Subdivisions']
+
+messages = subFolder.Items
 messages.Sort("[ReceivedTime]", True)
 
 message = messages.GetFirst()
@@ -106,7 +109,7 @@ for i in range(100):
 
 print("SUBS: {}".format(subNumbers))
 
-for x in subNumbers:
+for x in subNumbers[:5]:
     findfile(x)
 
 # findfile(13891, True)

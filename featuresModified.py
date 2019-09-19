@@ -4,9 +4,10 @@ import os
 
 """
 For each Feature Class
-Get records modified within the last 5 days
+Get records modified within the last 7 days
 """
-daysOld = 30
+
+daysOld = 7
 today = datetime.date.today()
 foreignEdits = False
 
@@ -48,7 +49,7 @@ with open(results_txtfile, 'w') as txt_results:
                         txt_results.write("\n\n\t{} - {}\n\t{} - {}".format(
                             v[0], row[fields.index(v[0])], v[1], row[fields.index(v[1])]))
                         txt_results.write("\n\tLAST MODIFIED: {} days ago \n\tBY: {}".format(daysDelta, modifiedBy))
-                except:
+                except as (E):
                     continue
 
 if foreignEdits is True:

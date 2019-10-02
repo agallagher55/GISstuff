@@ -36,7 +36,7 @@ def merge_csvs(filename='output'):
     print("\tMerged: '{}' to '{}'".format(', '.join(csvs), filename + '.xlsx'))
 
 
-merge_csvs()
+# merge_csvs()
 
 
 def main():
